@@ -72,14 +72,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Economia României — Tablou de bord financiar" },
+      { name: "description", content: "Curs valutar BNR, indicele BET, ROBOR, inflație și macro — explicate simplu." },
+      { name: "author", content: "Economia României" },
+      { property: "og:title", content: "Economia României" },
+      { property: "og:description", content: "Curs valutar, bursă, dobânzi și inflație — într-un singur loc." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
       {
@@ -108,12 +107,16 @@ function RootShell({ children }: { children: React.ReactNode }) {
   );
 }
 
+import { AppShell } from "@/components/AppShell";
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Outlet />
+      <AppShell>
+        <Outlet />
+      </AppShell>
     </QueryClientProvider>
   );
 }
