@@ -9,12 +9,30 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as MacroRouteImport } from './routes/macro'
+import { Route as DobanziRouteImport } from './routes/dobanzi'
 import { Route as CursValutarRouteImport } from './routes/curs-valutar'
+import { Route as BursaRouteImport } from './routes/bursa'
 import { Route as IndexRouteImport } from './routes/index'
 
+const MacroRoute = MacroRouteImport.update({
+  id: '/macro',
+  path: '/macro',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DobanziRoute = DobanziRouteImport.update({
+  id: '/dobanzi',
+  path: '/dobanzi',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CursValutarRoute = CursValutarRouteImport.update({
   id: '/curs-valutar',
   path: '/curs-valutar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BursaRoute = BursaRouteImport.update({
+  id: '/bursa',
+  path: '/bursa',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -25,37 +43,70 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/bursa': typeof BursaRoute
   '/curs-valutar': typeof CursValutarRoute
+  '/dobanzi': typeof DobanziRoute
+  '/macro': typeof MacroRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/bursa': typeof BursaRoute
   '/curs-valutar': typeof CursValutarRoute
+  '/dobanzi': typeof DobanziRoute
+  '/macro': typeof MacroRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/bursa': typeof BursaRoute
   '/curs-valutar': typeof CursValutarRoute
+  '/dobanzi': typeof DobanziRoute
+  '/macro': typeof MacroRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/curs-valutar'
+  fullPaths: '/' | '/bursa' | '/curs-valutar' | '/dobanzi' | '/macro'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/curs-valutar'
-  id: '__root__' | '/' | '/curs-valutar'
+  to: '/' | '/bursa' | '/curs-valutar' | '/dobanzi' | '/macro'
+  id: '__root__' | '/' | '/bursa' | '/curs-valutar' | '/dobanzi' | '/macro'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BursaRoute: typeof BursaRoute
   CursValutarRoute: typeof CursValutarRoute
+  DobanziRoute: typeof DobanziRoute
+  MacroRoute: typeof MacroRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/macro': {
+      id: '/macro'
+      path: '/macro'
+      fullPath: '/macro'
+      preLoaderRoute: typeof MacroRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dobanzi': {
+      id: '/dobanzi'
+      path: '/dobanzi'
+      fullPath: '/dobanzi'
+      preLoaderRoute: typeof DobanziRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/curs-valutar': {
       id: '/curs-valutar'
       path: '/curs-valutar'
       fullPath: '/curs-valutar'
       preLoaderRoute: typeof CursValutarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bursa': {
+      id: '/bursa'
+      path: '/bursa'
+      fullPath: '/bursa'
+      preLoaderRoute: typeof BursaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -70,8 +121,21 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BursaRoute: BursaRoute,
   CursValutarRoute: CursValutarRoute,
+  DobanziRoute: DobanziRoute,
+  MacroRoute: MacroRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
