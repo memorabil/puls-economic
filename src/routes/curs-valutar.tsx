@@ -4,6 +4,7 @@ import { ArrowDownRight, ArrowUpRight, ArrowLeftRight } from "lucide-react";
 import { currencies, fxSeries } from "@/lib/mock-data";
 import { fmtNum, fmtPct, pctChange } from "@/lib/format";
 import { LineCard } from "@/components/LineCard";
+import { Sparkline } from "@/components/Sparkline";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/curs-valutar")({
@@ -133,17 +134,6 @@ function CursPage() {
 
 function MiniSpark({ code, positive }: { code: string; positive: boolean }) {
   const data = useMemo(() => fxSeries(code, 30), [code]);
-  return (
-    <div className="h-full">
-      {/* lazy reuse */}
-      <SparkInline data={data} positive={positive} />
-    </div>
-  );
-}
-
-function SparkInline({ data, positive }: { data: number[]; positive: boolean }) {
-  // Inline tiny implementation to avoid extra import cycles
-  const Sparkline = require("@/components/Sparkline").Sparkline;
   return <Sparkline data={data} positive={positive} />;
 }
 
