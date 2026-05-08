@@ -6,6 +6,7 @@ import { fmtNum, fmtPct, pctChange } from "@/lib/format";
 import { LineCard } from "@/components/LineCard";
 import { Sparkline } from "@/components/Sparkline";
 import { cn } from "@/lib/utils";
+import { Disclaimer } from "@/components/Disclaimer";
 
 export const Route = createFileRoute("/curs-valutar")({
   head: () => ({
@@ -41,6 +42,7 @@ function CursPage() {
         <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight">Curs valutar</h1>
         <p className="mt-2 text-muted-foreground text-[15px]">Cursul oficial BNR pentru monedele majore — actualizat zilnic.</p>
       </header>
+      <Disclaimer />
 
       {/* Selector + chart */}
       <section className="rounded-3xl bg-card soft-shadow p-5 sm:p-7">
