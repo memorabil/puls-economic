@@ -47,13 +47,16 @@ function MacroPage() {
         <h2 className="text-lg font-semibold tracking-tight mb-5">Indicatori macro</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {macroCards.map((m) => (
-            <div key={m.key} className="rounded-3xl bg-card soft-shadow p-5 sm:p-6">
-              <MetricCard label={m.label} value={m.value} unit={m.unit} digits={m.digits} tone={m.tone} explainer={m.explainer} />
-              <div className="mt-3 -mx-1">
-                <div className="text-[10.5px] uppercase tracking-wide text-muted-foreground/80 font-medium px-1 mb-1">Evoluție 5 ani</div>
-                <MiniArea data={macroSeries(m.key, Math.abs(m.value), m.vol)} positive={m.value >= 0} height={48} />
-              </div>
-            </div>
+            <MetricCard
+              key={m.key}
+              label={m.label}
+              value={m.value}
+              unit={m.unit}
+              digits={m.digits}
+              tone={m.tone}
+              explainer={m.explainer}
+              series={macroSeries(m.key, Math.abs(m.value), m.vol)}
+            />
           ))}
         </div>
       </section>
