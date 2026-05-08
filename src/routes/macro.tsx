@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { MetricCard } from "@/components/MetricCard";
-import { MiniArea } from "@/components/MiniArea";
+
 import { Disclaimer } from "@/components/Disclaimer";
 import { macro, macroSeries, neighbors, weeklyHighlights } from "@/lib/mock-data";
 import { fmtNum } from "@/lib/format";
