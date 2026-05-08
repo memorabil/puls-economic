@@ -149,7 +149,7 @@ function Converter() {
   const result = (amount * fromRate) / toRate;
 
   return (
-    <section className="rounded-3xl bg-pastel-mint/30 p-6 sm:p-8">
+    <section className="rounded-3xl bg-pastel-mint/30 p-6 sm:p-8 mx-auto w-full max-w-[640px]">
       <div className="flex items-center gap-2 text-[13px] font-medium text-muted-foreground">
         <ArrowLeftRight className="h-4 w-4" /> Convertor valutar
       </div>
@@ -159,13 +159,14 @@ function Converter() {
           <button
             onClick={() => { setFrom(to); setTo(from); }}
             className="h-10 w-10 rounded-full bg-card soft-shadow flex items-center justify-center hover:soft-shadow-lg transition"
-            aria-label="Inversează"
+            aria-label="Inversează monedele"
           >
             <ArrowLeftRight className="h-4 w-4" />
           </button>
         </div>
         <ConverterField value={result} onChange={() => {}} currency={to} setCurrency={setTo} list={list} label="În" readOnly />
       </div>
+      <p className="mt-4 text-[11.5px] text-muted-foreground text-center">Calculat la cursul oficial BNR de astăzi.</p>
     </section>
   );
 }
