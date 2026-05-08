@@ -39,11 +39,12 @@ export const currencies = [
 export const fxSeries = (code: string, days: number) => {
   const c = currencies.find((x) => x.code === code) ?? currencies[0];
   const seed = code.split("").reduce((a, b) => a + b.charCodeAt(0), 0);
-  return makeSeries(c.rate * 0.97, days, 0.004, seed).map((v, i, arr) => {
-    // anchor last point to current rate
-    if (i === arr.length - 1) return c.rate;
-    return v;
-  });
+  const raw = makeSeries(c.rate * 0.97, days, 0.004, seed);
+  // Smoothly blend the series so that the last point lands on the current rate
+  // without an artificial spike.
+  const last = raw[raw.length - 1];
+  const drift = c.rate - last;
+  return raw.map((v, i) => +(v + (drift * i) / (raw.length - 1)).toFixed(4));
 };
 
 // BET index & companies
@@ -122,3 +123,44 @@ export const neighbors = [
 
 export const lastUpdated = () =>
   new Date().toLocaleTimeString("ro-RO", { hour: "2-digit", minute: "2-digit" });
+
+// 5-year mini series for macro cards (60 monthly points)
+export const macroSeries = (key: string, end: number, vol = 0.04) => {
+  const seed = key.split("").reduce((a, b) => a + b.charCodeAt(0), 0);
+  const raw = makeSeries(end * 0.85, 60, vol, seed);
+  const last = raw[raw.length - 1];
+  const drift = end - last;
+  return raw.map((v, i) => +(v + (drift * i) / (raw.length - 1)).toFixed(2));
+};
+
+// Sparkline series for a generic indicator (30 days)
+export const indicatorSeries = (key: string, end: number, vol = 0.02) => {
+  const seed = key.split("").reduce((a, b) => a + b.charCodeAt(0), 0);
+  const raw = makeSeries(end * 0.97, 30, vol, seed);
+  const last = raw[raw.length - 1];
+  const drift = end - last;
+  return raw.map((v, i) => +(v + (drift * i) / (raw.length - 1)).toFixed(3));
+};
+
+// Trading volumes (top by daily volume)
+export const volumes = [
+  { ticker: "TLV", volume: 32.4 },
+  { ticker: "SNP", volume: 28.7 },
+  { ticker: "H2O", volume: 24.1 },
+  { ticker: "FP", volume: 18.6 },
+  { ticker: "BRD", volume: 12.3 },
+];
+
+// Bank deposit rates (mock, % p.a.)
+export const deposits = [
+  { term: "6 luni", ron: 5.4, eur: 1.8 },
+  { term: "12 luni", ron: 5.8, eur: 2.1 },
+  { term: "24 luni", ron: 5.5, eur: 2.4 },
+];
+
+// Three weekly highlights
+export const weeklyHighlights = [
+  { title: "Inflația", value: "4,2%", note: "În scădere a 11-a lună la rând — apropriere lentă de ținta BNR." },
+  { title: "Cursul EUR", value: "4,9785", note: "Leul rămâne stabil în jurul pragului de 5 lei pentru un euro." },
+  { title: "Indicele BET", value: "18.642", note: "Bursa locală încheie săptămâna în creștere, susținută de energetice." },
+];
