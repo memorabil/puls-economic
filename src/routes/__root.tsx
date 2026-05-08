@@ -75,10 +75,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "Economia României — Tablou de bord financiar" },
       { name: "description", content: "Curs valutar BNR, indicele BET, ROBOR, inflație și macro — explicate simplu." },
       { name: "author", content: "Economia României" },
-      { property: "og:title", content: "Economia României" },
-      { property: "og:description", content: "Curs valutar, bursă, dobânzi și inflație — într-un singur loc." },
+      { property: "og:title", content: "Economia României — Tablou de bord financiar" },
+      { property: "og:description", content: "Curs valutar BNR, indicele BET, ROBOR, inflație și macro — explicate simplu." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
+      { name: "twitter:title", content: "Economia României — Tablou de bord financiar" },
+      { name: "twitter:description", content: "Curs valutar BNR, indicele BET, ROBOR, inflație și macro — explicate simplu." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/ca6df931-76b2-4878-b0e9-2ab0a7a6eb58/id-preview-7dcd2eb3--e69c373f-d149-41ea-88aa-734f72f9c114.lovable.app-1778166993911.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/ca6df931-76b2-4878-b0e9-2ab0a7a6eb58/id-preview-7dcd2eb3--e69c373f-d149-41ea-88aa-734f72f9c114.lovable.app-1778166993911.png" },
     ],
     links: [
       {
