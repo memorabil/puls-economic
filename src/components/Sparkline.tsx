@@ -14,7 +14,7 @@ export function Sparkline({ data, positive = true }: { data: number[]; positive?
             <stop offset="100%" stopColor={stroke} stopOpacity={0} />
           </linearGradient>
         </defs>
-        <Area type="monotone" dataKey="v" stroke={stroke} strokeWidth={1.6} fill={`url(#${id})`} isAnimationActive={false} />
+        <Area type="monotone" dataKey="v" stroke={stroke} strokeWidth={1.8} fill={`url(#${id})`} isAnimationActive={false} />
       </AreaChart>
     </ResponsiveContainer>
   );
