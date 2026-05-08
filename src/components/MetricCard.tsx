@@ -76,7 +76,7 @@ export function MetricCard({
           )}
         </div>
         {series && series.length > 1 && (
-          <div className="w-24 sm:w-28 h-12 opacity-90">
+          <div className="w-28 sm:w-32 h-[50px] opacity-95">
             <Sparkline data={series} positive={up} />
           </div>
         )}

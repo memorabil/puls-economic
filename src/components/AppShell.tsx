@@ -1,7 +1,8 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Home, Coins, LineChart, Percent, Globe2, Moon, Sun, Activity } from "lucide-react";
+import { Home, Coins, LineChart, Percent, Globe2, Moon, Sun, Mail } from "lucide-react";
 import { useEffect, useState } from "react";
 import { lastUpdated } from "@/lib/mock-data";
+import { PulseLogo } from "./PulseLogo";
 
 const navItems = [
   { to: "/", label: "Acasă", icon: Home },
@@ -14,13 +15,15 @@ const navItems = [
 export function AppShell({ children }: { children: React.ReactNode }) {
   const path = useRouterState({ select: (s) => s.location.pathname });
   const [dark, setDark] = useState(false);
-  const [time, setTime] = useState(lastUpdated());
+  // Avoid SSR/CSR hydration mismatch — set time only after mount.
+  const [time, setTime] = useState<string>("--:--");
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", dark);
   }, [dark]);
 
   useEffect(() => {
+    setTime(lastUpdated());
     const t = setInterval(() => setTime(lastUpdated()), 60_000);
     return () => clearInterval(t);
   }, []);
@@ -29,13 +32,11 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     <div className="min-h-screen bg-background text-foreground">
       <header className="sticky top-0 z-40 glass border-b border-border/60">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
-          <Link to="/" className="flex items-center gap-2">
-            <div className="flex h-9 w-9 items-center justify-center rounded-2xl bg-pastel-blue/60">
-              <Activity className="h-4 w-4 text-foreground/80" strokeWidth={2.2} />
-            </div>
+          <Link to="/" className="flex items-center gap-2.5">
+            <PulseLogo className="h-9 w-9" />
             <div className="leading-tight">
-              <div className="text-[15px] font-semibold tracking-tight">Economia României</div>
-              <div className="text-[11px] text-muted-foreground">Tablou de bord</div>
+              <div className="text-[15px] font-semibold tracking-tight">PulsEconomic</div>
+              <div className="text-[10.5px] text-muted-foreground/70">Tablou de bord</div>
             </div>
           </Link>
 
@@ -59,7 +60,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <button
             onClick={() => setDark((d) => !d)}
             aria-label="Comută tema"
-            className="flex h-9 w-9 items-center justify-center rounded-full bg-muted/70 hover:bg-muted transition"
+            className="flex h-9 w-9 items-center justify-center rounded-full bg-muted/70 hover:bg-muted transition focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
           >
             {dark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
           </button>
@@ -88,9 +89,39 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
       <main className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-10">{children}</main>
 
-      <footer className="mx-auto max-w-7xl px-4 sm:px-6 py-8 text-center text-[12px] text-muted-foreground">
-        <div>Ultima actualizare: <span className="text-foreground/80 font-medium">{time}</span></div>
-        <div className="mt-1">Date orientative · Surse: BNR, BVB, INS · Construit pentru claritate</div>
+      <footer className="border-t border-border/50 mt-10">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 py-10 grid grid-cols-1 sm:grid-cols-3 gap-8 text-[13px]">
+          <div>
+            <div className="flex items-center gap-2 mb-3">
+              <PulseLogo className="h-7 w-7" />
+              <div className="font-semibold">PulsEconomic</div>
+            </div>
+            <p className="text-muted-foreground leading-relaxed">
+              Pulsul economiei României, explicat simplu pentru oricine vrea să înțeleagă ce se întâmplă cu banii săi.
+            </p>
+          </div>
+          <div>
+            <div className="font-semibold mb-3">Surse de date</div>
+            <ul className="space-y-1.5 text-muted-foreground">
+              <li><a href="https://www.bnr.ro" target="_blank" rel="noopener noreferrer" className="hover:text-foreground">Banca Națională a României</a></li>
+              <li><a href="https://www.bvb.ro" target="_blank" rel="noopener noreferrer" className="hover:text-foreground">Bursa de Valori București</a></li>
+              <li><a href="https://insse.ro" target="_blank" rel="noopener noreferrer" className="hover:text-foreground">Institutul Național de Statistică</a></li>
+            </ul>
+          </div>
+          <div>
+            <div className="font-semibold mb-3">Contact &amp; Feedback</div>
+            <a href="mailto:salut@pulseconomic.ro" className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground">
+              <Mail className="h-3.5 w-3.5" /> salut@pulseconomic.ro
+            </a>
+            <p className="mt-3 text-muted-foreground">Ai o sugestie? Scrie-ne.</p>
+          </div>
+        </div>
+        <div className="border-t border-border/50">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-2 text-[11.5px] text-muted-foreground">
+            <div>© 2026 PulsEconomic.ro · Date orientative · Nu constituie sfat financiar.</div>
+            <div>Ultima actualizare: <span className="text-foreground/80 font-medium" suppressHydrationWarning>{time}</span></div>
+          </div>
+        </div>
       </footer>
     </div>
   );
