@@ -56,7 +56,7 @@ function MacroPage() {
               tone={m.tone}
               explainer={m.explainer}
               series={macroSeries(m.key, Math.abs(m.value), m.vol)}
-            />
+             demo />
           ))}
         </div>
       </section>
@@ -64,10 +64,10 @@ function MacroPage() {
       <section>
         <h2 className="text-lg font-semibold tracking-tight mb-5">Energie &amp; combustibili</h2>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <MetricCard label="Benzină 95" value={macro.fuel95} unit="RON/l" tone="peach" />
-          <MetricCard label="Motorină" value={macro.fuelDiesel} unit="RON/l" tone="lavender" />
+          <MetricCard label="Benzină 95" value={macro.fuel95} unit="RON/l" tone="peach"  demo />
+          <MetricCard label="Motorină" value={macro.fuelDiesel} unit="RON/l" tone="lavender"  demo />
           <MetricCard label="Petrol Brent" value={macro.brent} unit="$/baril" digits={1} tone="blue"
-            explainer="Prețul de referință pentru petrolul brut la nivel mondial." />
+            explainer="Prețul de referință pentru petrolul brut la nivel mondial."  demo />
         </div>
       </section>
 

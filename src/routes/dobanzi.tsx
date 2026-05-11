@@ -39,15 +39,15 @@ function DobanziPage() {
         <h2 className="text-lg font-semibold tracking-tight mb-5">Dobânzi de referință</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <MetricCard label="Dobânda BNR" value={rates.bnrPolicy} unit="%" tone="mint"
-            explainer="Dobânda de politică monetară — instrumentul principal al BNR pentru a controla inflația. Influențează toate dobânzile din economie." />
+            explainer="Dobânda de politică monetară — instrumentul principal al BNR pentru a controla inflația. Influențează toate dobânzile din economie."  demo />
           <MetricCard label="ROBOR 3M" value={rates.robor3M} unit="%" tone="blue"
-            explainer="Rata medie a dobânzii la care băncile românești se împrumută între ele pe 3 luni. Influențează direct dobânzile la creditele cu rată variabilă." />
-          <MetricCard label="ROBOR 6M" value={rates.robor6M} unit="%" tone="lavender" />
-          <MetricCard label="ROBOR 12M" value={rates.robor12M} unit="%" tone="peach" />
+            explainer="Rata medie a dobânzii la care băncile românești se împrumută între ele pe 3 luni. Influențează direct dobânzile la creditele cu rată variabilă."  demo />
+          <MetricCard label="ROBOR 6M" value={rates.robor6M} unit="%" tone="lavender"  demo />
+          <MetricCard label="ROBOR 12M" value={rates.robor12M} unit="%" tone="peach"  demo />
           <MetricCard label="IRCC" value={rates.ircc} unit="%" tone="butter"
-            explainer="Indicele de Referință pentru Creditele Consumatorilor — folosit pentru creditele noi în lei. Se actualizează trimestrial." />
+            explainer="Indicele de Referință pentru Creditele Consumatorilor — folosit pentru creditele noi în lei. Se actualizează trimestrial."  demo />
           <MetricCard label="Titluri stat 10 ani" value={rates.bond10y} unit="%" tone="sand"
-            explainer="Randamentul la care statul român se împrumută pe 10 ani. Reflectă încrederea investitorilor în economia României." />
+            explainer="Randamentul la care statul român se împrumută pe 10 ani. Reflectă încrederea investitorilor în economia României."  demo />
         </div>
       </section>
 
@@ -68,11 +68,11 @@ function DobanziPage() {
 
         <div className="grid grid-cols-1 gap-4">
           <MetricCard label="Inflație lunară" value={inflation.monthly} unit="%" tone="peach"
-            explainer="Cu cât au crescut prețurile față de luna precedentă." />
+            explainer="Cu cât au crescut prețurile față de luna precedentă."  demo />
           <MetricCard label="Rata șomajului" value={labor.unemployment} unit="%" tone="lavender"
-            explainer="Procentul populației active care caută activ un loc de muncă." />
+            explainer="Procentul populației active care caută activ un loc de muncă."  demo />
           <MetricCard label="Salariu mediu net" value={labor.avgNetSalary} unit="RON" digits={0} tone="mint"
-            explainer="Salariul mediu net pe economie, conform INS." />
+            explainer="Salariul mediu net pe economie, conform INS."  demo />
         </div>
       </section>
 
