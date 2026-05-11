@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Home, Coins, LineChart, Percent, Globe2, Moon, Sun, Mail } from "lucide-react";
+import { Home, Coins, LineChart, Percent, Globe2, Moon, Sun, Mail, Database, Check, AlertTriangle } from "lucide-react";
 import { useEffect, useState } from "react";
 import { lastUpdated } from "@/lib/mock-data";
 import { PulseLogo } from "./PulseLogo";
@@ -101,7 +101,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             </p>
           </div>
           <div>
-            <div className="font-semibold mb-3">Surse de date</div>
+            <div className="font-semibold mb-3 inline-flex items-center gap-1.5"><Database strokeWidth={1.5} className="h-3.5 w-3.5" /> Surse de date</div>
             <ul className="space-y-1.5 text-muted-foreground">
               <li><a href="https://www.bnr.ro" target="_blank" rel="noopener noreferrer" className="hover:text-foreground">Banca Națională a României</a></li>
               <li><a href="https://www.bvb.ro" target="_blank" rel="noopener noreferrer" className="hover:text-foreground">Bursa de Valori București</a></li>
@@ -109,7 +109,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             </ul>
           </div>
           <div>
-            <div className="font-semibold mb-3">Contact &amp; Feedback</div>
+            <div className="font-semibold mb-3 inline-flex items-center gap-1.5"><Mail strokeWidth={1.5} className="h-3.5 w-3.5" /> Contact &amp; Feedback</div>
             <a href="mailto:salut@pulseconomic.ro" className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground">
               <Mail className="h-3.5 w-3.5" /> salut@pulseconomic.ro
             </a>
@@ -117,9 +117,15 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           </div>
         </div>
         <div className="border-t border-border/50">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-2 text-[11.5px] text-muted-foreground">
-            <div>© 2026 PulsEconomic.ro · Date orientative · Nu constituie sfat financiar.</div>
-            <div>Ultima actualizare: <span className="text-foreground/80 font-medium" suppressHydrationWarning>{time}</span></div>
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 py-5 flex flex-col gap-2 text-[11.5px] text-muted-foreground">
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
+              <span className="inline-flex items-center gap-1.5"><Check strokeWidth={1.5} className="h-3 w-3 text-up-foreground" /> Curs valutar: date oficiale BNR</span>
+              <span className="inline-flex items-center gap-1.5"><AlertTriangle strokeWidth={1.5} className="h-3 w-3 text-[oklch(0.7_0.12_70)]" /> Restul indicatorilor: date demo în această versiune</span>
+            </div>
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+              <div>© 2026 PulsEconomic.ro · Nu constituie sfat financiar.</div>
+              <div>Ultima actualizare: <span className="text-foreground/80 font-medium" suppressHydrationWarning>{time}</span></div>
+            </div>
           </div>
         </div>
       </footer>
