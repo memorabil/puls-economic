@@ -102,30 +102,85 @@
 }
 
 .dark {
-  --background: oklch(0.18 0.01 260);
-  --foreground: oklch(0.95 0.005 90);
-  --card: oklch(0.22 0.012 260);
-  --card-foreground: oklch(0.95 0.005 90);
-  --popover: oklch(0.22 0.012 260);
-  --popover-foreground: oklch(0.95 0.005 90);
-  --primary: oklch(0.85 0.04 250);
-  --primary-foreground: oklch(0.2 0.01 260);
-  --secondary: oklch(0.26 0.012 260);
-  --secondary-foreground: oklch(0.95 0.005 90);
-  --muted: oklch(0.26 0.012 260);
-  --muted-foreground: oklch(0.7 0.015 260);
-  --accent: oklch(0.3 0.03 250);
-  --accent-foreground: oklch(0.95 0.005 90);
-  --destructive: oklch(0.65 0.12 20);
-  --destructive-foreground: oklch(0.99 0 0);
-  --border: oklch(1 0 0 / 8%);
-  --input: oklch(1 0 0 / 12%);
-  --ring: oklch(0.55 0.04 250);
+  /* Layered surfaces — page < section < card < hover */
+  --background: #0F1115;          /* page */
+  --surface-1: #161922;           /* large sections / header */
+  --surface-2: #1E2230;           /* cards */
+  --surface-3: #262B3B;           /* hover / active */
 
-  --up: oklch(0.55 0.08 155);
-  --up-foreground: oklch(0.88 0.07 155);
-  --down: oklch(0.55 0.09 25);
-  --down-foreground: oklch(0.88 0.07 25);
+  --foreground: #F2F4F8;          /* primary text — warm white */
+  --card: #1E2230;
+  --card-foreground: #F2F4F8;
+  --popover: #262B3B;
+  --popover-foreground: #F2F4F8;
+
+  --primary: #F2F4F8;             /* inverted: light button on dark */
+  --primary-foreground: #0F1115;
+
+  --secondary: #262B3B;
+  --secondary-foreground: #F2F4F8;
+
+  --muted: #161922;
+  --muted-foreground: #A8AEBF;    /* secondary text */
+
+  --accent: #262B3B;
+  --accent-foreground: #F2F4F8;
+
+  --destructive: oklch(0.7 0.14 20);
+  --destructive-foreground: #0F1115;
+
+  --border: rgba(255, 255, 255, 0.08);
+  --input: rgba(255, 255, 255, 0.08);
+  --ring: rgba(157, 196, 232, 0.5);
+
+  /* Saturated pastel palette for dark surfaces */
+  --pastel-blue: #9DC4E8;
+  --pastel-mint: #7DD3A8;
+  --pastel-peach: #F2B89E;
+  --pastel-lavender: #B8AFE0;
+  --pastel-butter: #E8D88B;
+  --pastel-sand: #2A2F3D;
+  --pastel-rose: #F4A4A4;
+
+  --up: rgba(125, 211, 168, 0.18);
+  --up-foreground: #7DD3A8;
+  --down: rgba(244, 164, 164, 0.18);
+  --down-foreground: #F4A4A4;
+
+  --chart-1: #9DC4E8;
+  --chart-2: #7DD3A8;
+  --chart-3: #F2B89E;
+  --chart-4: #B8AFE0;
+  --chart-5: #E8D88B;
+}
+
+.dark body {
+  background-color: #0F1115;
+}
+
+/* Subtle highlight + natural shadow on cards */
+.dark .soft-shadow {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 4px 12px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.dark .soft-shadow-lg {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 10px 28px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* Header surface in dark mode */
+.dark .glass {
+  background: rgba(22, 25, 34, 0.85);
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+/* Smooth theme transitions */
+html, body, .glass, [class*="bg-"], [class*="text-"], [class*="border-"] {
+  transition: background-color 300ms ease, color 300ms ease, border-color 300ms ease;
 }
 
 @layer base {
