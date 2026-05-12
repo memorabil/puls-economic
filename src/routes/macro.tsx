@@ -4,7 +4,7 @@ import { MetricCard } from "@/components/MetricCard";
 import { Disclaimer } from "@/components/Disclaimer";
 import { macro, macroSeries, neighbors, weeklyHighlights } from "@/lib/mock-data";
 import { fmtNum } from "@/lib/format";
-import { Sparkles } from "lucide-react";
+import { Sparkles, BarChart3, TrendingUp, TrendingDown, Receipt, ArrowLeftRight, Coins, Fuel, Droplet } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/macro")({
@@ -20,17 +20,17 @@ export const Route = createFileRoute("/macro")({
 });
 
 const macroCards = [
-  { key: "gdp", label: "PIB", value: macro.gdp, unit: "mld. €", digits: 1, tone: "blue" as const, vol: 0.03,
+  { key: "gdp", label: "PIB", value: macro.gdp, unit: "mld. €", digits: 1, tone: "mint" as const, vol: 0.03, icon: BarChart3,
     explainer: "Produsul Intern Brut — valoarea totală a tuturor bunurilor și serviciilor produse în România într-un an." },
-  { key: "gdpGrowth", label: "Creștere PIB", value: macro.gdpGrowth, unit: "%", tone: "mint" as const, vol: 0.4,
+  { key: "gdpGrowth", label: "Creștere PIB", value: macro.gdpGrowth, unit: "%", tone: "mint" as const, vol: 0.4, icon: TrendingUp,
     explainer: "Cu cât crește economia României anual, ajustat pentru inflație." },
-  { key: "publicDebt", label: "Datoria publică", value: macro.publicDebt, unit: "% PIB", tone: "lavender" as const, vol: 0.04,
+  { key: "publicDebt", label: "Datoria publică", value: macro.publicDebt, unit: "% PIB", tone: "peach" as const, vol: 0.04, icon: Receipt,
     explainer: "Cât datorează statul român, raportat la mărimea economiei. Sub 60% e considerat sustenabil în UE." },
-  { key: "budgetDeficit", label: "Deficit bugetar", value: macro.budgetDeficit, unit: "% PIB", tone: "peach" as const, vol: 0.3,
+  { key: "budgetDeficit", label: "Deficit bugetar", value: macro.budgetDeficit, unit: "% PIB", tone: "peach" as const, vol: 0.3, icon: TrendingDown,
     explainer: "Cu cât cheltuie statul mai mult decât încasează. UE recomandă maxim -3%." },
-  { key: "trade", label: "Balanța comercială", value: macro.tradeBalance, unit: "mld. €", digits: 1, tone: "sand" as const, vol: 0.15,
+  { key: "trade", label: "Balanța comercială", value: macro.tradeBalance, unit: "mld. €", digits: 1, tone: "blue" as const, vol: 0.15, icon: ArrowLeftRight,
     explainer: "Diferența între ce exportăm și ce importăm. Negativ = importăm mai mult decât exportăm." },
-  { key: "gold", label: "Aur", value: macro.gold, unit: "RON/g", tone: "butter" as const, vol: 0.1,
+  { key: "gold", label: "Aur", value: macro.gold, unit: "RON/g", tone: "butter" as const, vol: 0.1, icon: Coins,
     explainer: "Prețul unui gram de aur fin, conform cotațiilor BNR." },
 ];
 
@@ -54,6 +54,7 @@ function MacroPage() {
               unit={m.unit}
               digits={m.digits}
               tone={m.tone}
+              icon={m.icon}
               explainer={m.explainer}
               series={macroSeries(m.key, Math.abs(m.value), m.vol)}
              demo />
@@ -64,9 +65,9 @@ function MacroPage() {
       <section>
         <h2 className="text-lg font-semibold tracking-tight mb-5">Energie &amp; combustibili</h2>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <MetricCard label="Benzină 95" value={macro.fuel95} unit="RON/l" tone="peach"  demo />
-          <MetricCard label="Motorină" value={macro.fuelDiesel} unit="RON/l" tone="lavender"  demo />
-          <MetricCard label="Petrol Brent" value={macro.brent} unit="$/baril" digits={1} tone="blue"
+          <MetricCard label="Benzină 95" value={macro.fuel95} unit="RON/l" tone="peach" icon={Fuel} demo />
+          <MetricCard label="Motorină" value={macro.fuelDiesel} unit="RON/l" tone="sand" icon={Fuel} demo />
+          <MetricCard label="Petrol Brent" value={macro.brent} unit="$/baril" digits={1} tone="blue" icon={Droplet}
             explainer="Prețul de referință pentru petrolul brut la nivel mondial."  demo />
         </div>
       </section>
