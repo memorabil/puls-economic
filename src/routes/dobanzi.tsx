@@ -5,7 +5,7 @@ import { LineCard } from "@/components/LineCard";
 import { Disclaimer } from "@/components/Disclaimer";
 import { deposits, inflation, labor, rates } from "@/lib/mock-data";
 import { fmtNum } from "@/lib/format";
-import { Calculator, PiggyBank } from "lucide-react";
+import { Calculator, PiggyBank, Landmark, Percent, LineChart, Receipt, Flame, Activity, Users, Wallet, Info } from "lucide-react";
 
 export const Route = createFileRoute("/dobanzi")({
   head: () => ({
@@ -38,15 +38,15 @@ function DobanziPage() {
       <section>
         <h2 className="text-lg font-semibold tracking-tight mb-5">Dobânzi de referință</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          <MetricCard label="Dobânda BNR" value={rates.bnrPolicy} unit="%" tone="mint"
+          <MetricCard label="Dobânda BNR" value={rates.bnrPolicy} unit="%" tone="mint" icon={Landmark}
             explainer="Dobânda de politică monetară — instrumentul principal al BNR pentru a controla inflația. Influențează toate dobânzile din economie."  demo />
-          <MetricCard label="ROBOR 3M" value={rates.robor3M} unit="%" tone="blue"
+          <MetricCard label="ROBOR 3M" value={rates.robor3M} unit="%" tone="lavender" icon={Percent}
             explainer="Rata medie a dobânzii la care băncile românești se împrumută între ele pe 3 luni. Influențează direct dobânzile la creditele cu rată variabilă."  demo />
-          <MetricCard label="ROBOR 6M" value={rates.robor6M} unit="%" tone="lavender"  demo />
-          <MetricCard label="ROBOR 12M" value={rates.robor12M} unit="%" tone="peach"  demo />
-          <MetricCard label="IRCC" value={rates.ircc} unit="%" tone="butter"
+          <MetricCard label="ROBOR 6M" value={rates.robor6M} unit="%" tone="lavender" icon={Percent} demo />
+          <MetricCard label="ROBOR 12M" value={rates.robor12M} unit="%" tone="lavender" icon={Percent} demo />
+          <MetricCard label="IRCC" value={rates.ircc} unit="%" tone="blue" icon={LineChart}
             explainer="Indicele de Referință pentru Creditele Consumatorilor — folosit pentru creditele noi în lei. Se actualizează trimestrial."  demo />
-          <MetricCard label="Titluri stat 10 ani" value={rates.bond10y} unit="%" tone="sand"
+          <MetricCard label="Titluri stat 10 ani" value={rates.bond10y} unit="%" tone="sand" icon={Receipt}
             explainer="Randamentul la care statul român se împrumută pe 10 ani. Reflectă încrederea investitorilor în economia României."  demo />
         </div>
       </section>
@@ -54,24 +54,34 @@ function DobanziPage() {
       <section className="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-5">
         <div className="rounded-3xl bg-card soft-shadow p-6">
           <div className="flex items-end justify-between gap-3 mb-5">
-            <div>
+            <div className="flex items-start gap-2.5">
+              <div className="h-8 w-8 rounded-full flex items-center justify-center bg-pastel-peach/40 mt-1">
+                <Flame strokeWidth={1.5} className="h-5 w-5 text-[oklch(0.5_0.1_30)]" />
+              </div>
+              <div>
               <div className="text-[13px] text-muted-foreground">Inflație anuală (IPC)</div>
               <div className="text-4xl font-semibold tracking-tight tabular-nums">{fmtNum(inflation.yearly)}<span className="text-lg text-muted-foreground ml-1">%</span></div>
+              </div>
             </div>
             <div className="text-right text-[12px] text-muted-foreground">Ultimele 12 luni</div>
           </div>
           <LineCard data={inflation.series} labels={inflation.labels} positive={false} height={220} formatter={(v) => `${v.toFixed(1)}%`} />
-          <p className="mt-4 text-[13px] text-muted-foreground leading-relaxed">
-            <strong className="text-foreground">Ce înseamnă pentru tine?</strong> Cu o inflație de {fmtNum(inflation.yearly)}%, ce ai cumpărat acum un an cu 100 lei costă acum {fmtNum(100 * (1 + inflation.yearly / 100), 0)} lei. Banii din cont își pierd din putere dacă nu sunt investiți.
-          </p>
+          <div className="mt-4 flex items-start gap-2.5 rounded-2xl bg-pastel-butter/30 p-3.5">
+            <div className="h-7 w-7 rounded-full flex items-center justify-center bg-pastel-butter/60 shrink-0">
+              <Info strokeWidth={1.5} className="h-4 w-4 text-[oklch(0.5_0.09_85)]" />
+            </div>
+            <p className="text-[13px] text-muted-foreground leading-relaxed">
+              <strong className="text-foreground">Ce înseamnă pentru tine?</strong> Cu o inflație de {fmtNum(inflation.yearly)}%, ce ai cumpărat acum un an cu 100 lei costă acum {fmtNum(100 * (1 + inflation.yearly / 100), 0)} lei. Banii din cont își pierd din putere dacă nu sunt investiți.
+            </p>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 gap-4">
-          <MetricCard label="Inflație lunară" value={inflation.monthly} unit="%" tone="peach"
+          <MetricCard label="Inflație lunară" value={inflation.monthly} unit="%" tone="peach" icon={Activity}
             explainer="Cu cât au crescut prețurile față de luna precedentă."  demo />
-          <MetricCard label="Rata șomajului" value={labor.unemployment} unit="%" tone="lavender"
+          <MetricCard label="Rata șomajului" value={labor.unemployment} unit="%" tone="lavender" icon={Users}
             explainer="Procentul populației active care caută activ un loc de muncă."  demo />
-          <MetricCard label="Salariu mediu net" value={labor.avgNetSalary} unit="RON" digits={0} tone="mint"
+          <MetricCard label="Salariu mediu net" value={labor.avgNetSalary} unit="RON" digits={0} tone="mint" icon={Wallet}
             explainer="Salariul mediu net pe economie, conform INS."  demo />
         </div>
       </section>
