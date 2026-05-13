@@ -6,6 +6,7 @@ import { Disclaimer } from "@/components/Disclaimer";
 import { deposits, inflation, labor, rates } from "@/lib/mock-data";
 import { fmtNum } from "@/lib/format";
 import { Calculator, PiggyBank, Landmark, Percent, LineChart, Receipt, Flame, Activity, Users, Wallet, Info } from "lucide-react";
+import { useBnrIndicators } from "@/lib/use-bnr-indicators";
 
 export const Route = createFileRoute("/dobanzi")({
   head: () => ({
