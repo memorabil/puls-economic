@@ -5,7 +5,8 @@ import { fmtNum, fmtPct, pctChange } from "@/lib/format";
 import { LineCard } from "@/components/LineCard";
 import { Sparkline } from "@/components/Sparkline";
 import { Disclaimer } from "@/components/Disclaimer";
-import { ArrowDownRight, ArrowUpRight, ArrowUpDown, TrendingDown, TrendingUp, Star } from "lucide-react";
+import { TradingViewWidget } from "@/components/TradingViewWidget";
+import { ArrowDownRight, ArrowUpRight, ArrowUpDown, TrendingDown, TrendingUp, Star, BarChart3 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/bursa")({
