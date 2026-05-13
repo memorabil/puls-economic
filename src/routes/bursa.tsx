@@ -5,7 +5,8 @@ import { fmtNum, fmtPct, pctChange } from "@/lib/format";
 import { LineCard } from "@/components/LineCard";
 import { Sparkline } from "@/components/Sparkline";
 import { Disclaimer } from "@/components/Disclaimer";
-import { ArrowDownRight, ArrowUpRight, ArrowUpDown, TrendingDown, TrendingUp, Star } from "lucide-react";
+import { TradingViewWidget } from "@/components/TradingViewWidget";
+import { ArrowDownRight, ArrowUpRight, ArrowUpDown, TrendingDown, TrendingUp, Star, BarChart3 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/bursa")({
@@ -80,6 +81,63 @@ function BursaPage() {
             <LineCard data={betIndex.series} positive={betCh >= 0} height={180} formatter={(v) => fmtNum(v, 0)} />
           </div>
         </div>
+      </section>
+
+      {/* TradingView live chart for BET */}
+      <section className="rounded-3xl bg-card soft-shadow p-5 sm:p-7">
+        <div className="flex items-center gap-2 mb-4 text-[12px] uppercase tracking-wide font-medium text-muted-foreground">
+          <BarChart3 className="h-3.5 w-3.5" /> Grafic live BET (TradingView)
+        </div>
+        <TradingViewWidget
+          type="advanced-chart"
+          height={460}
+          config={{
+            symbol: "BVB:BETI",
+            interval: "D",
+            timezone: "Europe/Bucharest",
+            style: "3",
+            allow_symbol_change: true,
+            hide_side_toolbar: false,
+            calendar: false,
+            support_host: "https://www.tradingview.com",
+          }}
+        />
+        <p className="mt-3 text-[11.5px] text-muted-foreground">
+          Date și grafic: TradingView. Disponibilitatea simbolului depinde de feed-ul BVB.
+        </p>
+      </section>
+
+      {/* TradingView companies overview */}
+      <section className="rounded-3xl bg-card soft-shadow p-5 sm:p-7">
+        <div className="flex items-center gap-2 mb-4 text-[12px] uppercase tracking-wide font-medium text-muted-foreground">
+          <BarChart3 className="h-3.5 w-3.5" /> Companii BVB — overview live
+        </div>
+        <TradingViewWidget
+          type="market-overview"
+          height={500}
+          config={{
+            showChart: true,
+            showSymbolLogo: true,
+            dateRange: "12M",
+            tabs: [
+              {
+                title: "Bursa București",
+                symbols: [
+                  { s: "BVB:TLV", d: "Banca Transilvania" },
+                  { s: "BVB:H2O", d: "Hidroelectrica" },
+                  { s: "BVB:SNP", d: "OMV Petrom" },
+                  { s: "BVB:SNG", d: "Romgaz" },
+                  { s: "BVB:BRD", d: "BRD" },
+                  { s: "BVB:FP", d: "Fondul Proprietatea" },
+                  { s: "BVB:DIGI", d: "Digi" },
+                  { s: "BVB:EL", d: "Electrica" },
+                  { s: "BVB:TGN", d: "Transgaz" },
+                  { s: "BVB:SNN", d: "Nuclearelectrica" },
+                ],
+              },
+            ],
+          }}
+        />
       </section>
 
       {/* Top gainers / losers */}

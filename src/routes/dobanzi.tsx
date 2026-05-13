@@ -6,6 +6,7 @@ import { Disclaimer } from "@/components/Disclaimer";
 import { deposits, inflation, labor, rates } from "@/lib/mock-data";
 import { fmtNum } from "@/lib/format";
 import { Calculator, PiggyBank, Landmark, Percent, LineChart, Receipt, Flame, Activity, Users, Wallet, Info } from "lucide-react";
+import { useBnrIndicators } from "@/lib/use-bnr-indicators";
 
 export const Route = createFileRoute("/dobanzi")({
   head: () => ({
@@ -27,6 +28,13 @@ function monthlyRate(principal: number, annualPct: number, years: number) {
 }
 
 function DobanziPage() {
+  const ind = useBnrIndicators();
+  const v = ind.data?.values ?? {};
+  const live = (k: keyof typeof v, fallback: number) => (v[k] ?? fallback);
+  const isLive = (k: keyof typeof v) => v[k] !== undefined;
+  const src = ind.data?.asOf ? `BNR · ${ind.data.asOf}` : ind.data?.error ? "BNR · sursă indisponibilă" : undefined;
+  const stale = !!ind.data?.error || (!ind.isLoading && !ind.data?.asOf);
+
   return (
     <div className="space-y-10">
       <header>
@@ -38,14 +46,19 @@ function DobanziPage() {
       <section>
         <h2 className="text-lg font-semibold tracking-tight mb-5">Dobânzi de referință</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          <MetricCard label="Dobânda BNR" value={rates.bnrPolicy} unit="%" tone="mint" icon={Landmark}
-            explainer="Dobânda de politică monetară — instrumentul principal al BNR pentru a controla inflația. Influențează toate dobânzile din economie."  demo />
-          <MetricCard label="ROBOR 3M" value={rates.robor3M} unit="%" tone="lavender" icon={Percent}
-            explainer="Rata medie a dobânzii la care băncile românești se împrumută între ele pe 3 luni. Influențează direct dobânzile la creditele cu rată variabilă."  demo />
-          <MetricCard label="ROBOR 6M" value={rates.robor6M} unit="%" tone="lavender" icon={Percent} demo />
-          <MetricCard label="ROBOR 12M" value={rates.robor12M} unit="%" tone="lavender" icon={Percent} demo />
-          <MetricCard label="IRCC" value={rates.ircc} unit="%" tone="blue" icon={LineChart}
-            explainer="Indicele de Referință pentru Creditele Consumatorilor — folosit pentru creditele noi în lei. Se actualizează trimestrial."  demo />
+          <MetricCard label="Dobânda BNR" value={live("bnrPolicy", rates.bnrPolicy)} unit="%" tone="mint" icon={Landmark}
+            explainer="Dobânda de politică monetară — instrumentul principal al BNR pentru a controla inflația. Influențează toate dobânzile din economie."
+            source={isLive("bnrPolicy") ? src : undefined} stale={stale} loading={ind.isLoading} demo={!isLive("bnrPolicy")} />
+          <MetricCard label="ROBOR 3M" value={live("robor3M", rates.robor3M)} unit="%" tone="lavender" icon={Percent}
+            explainer="Rata medie a dobânzii la care băncile românești se împrumută între ele pe 3 luni. Influențează direct dobânzile la creditele cu rată variabilă."
+            source={isLive("robor3M") ? src : undefined} stale={stale} loading={ind.isLoading} demo={!isLive("robor3M")} />
+          <MetricCard label="ROBOR 6M" value={live("robor6M", rates.robor6M)} unit="%" tone="lavender" icon={Percent}
+            source={isLive("robor6M") ? src : undefined} stale={stale} loading={ind.isLoading} demo={!isLive("robor6M")} />
+          <MetricCard label="ROBOR 12M" value={live("robor12M", rates.robor12M)} unit="%" tone="lavender" icon={Percent}
+            source={isLive("robor12M") ? src : undefined} stale={stale} loading={ind.isLoading} demo={!isLive("robor12M")} />
+          <MetricCard label="IRCC" value={live("ircc", rates.ircc)} unit="%" tone="blue" icon={LineChart}
+            explainer="Indicele de Referință pentru Creditele Consumatorilor — folosit pentru creditele noi în lei. Se actualizează trimestrial."
+            source={isLive("ircc") ? src : undefined} stale={stale} loading={ind.isLoading} demo={!isLive("ircc")} />
           <MetricCard label="Titluri stat 10 ani" value={rates.bond10y} unit="%" tone="sand" icon={Receipt}
             explainer="Randamentul la care statul român se împrumută pe 10 ani. Reflectă încrederea investitorilor în economia României."  demo />
         </div>
