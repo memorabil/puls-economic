@@ -7,6 +7,7 @@ import { betIndex, indicatorSeries, inflation, rates } from "@/lib/mock-data";
 import { ArrowRight, BarChart3, TrendingUp, Percent, Landmark, Flame, Activity, LineChart as LineChartIcon, Lightbulb } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useBnrToday, useBnrHistory } from "@/lib/use-bnr";
+import { useBnrIndicators } from "@/lib/use-bnr-indicators";
 import { CURRENCY_META, formatRoDate, seriesForCode } from "@/lib/bnr-utils";
 
 export const Route = createFileRoute("/")({
@@ -22,6 +23,10 @@ export const Route = createFileRoute("/")({
 function HomePage() {
   const today = useBnrToday();
   const history = useBnrHistory(1);
+  const ind = useBnrIndicators();
+  const iv = ind.data?.values ?? {};
+  const indSrc = ind.data?.asOf ? `BNR · ${ind.data.asOf}` : undefined;
+  const indStale = !!ind.data?.error;
 
   const rates_ = today.data?.rates ?? {};
   const dates = Object.keys(history.data?.series ?? {}).sort();
@@ -107,15 +112,21 @@ function HomePage() {
           <MetricCard label="Indicele BET" value={betIndex.value} prev={betIndex.prev} current={betIndex.value}
             digits={2} series={betIndex.series} tone="butter" icon={TrendingUp} demo
             explainer="Indicele principal al Bursei de Valori București." />
-          <MetricCard label="ROBOR 3M" value={rates.robor3M} unit="%" tone="lavender" icon={Percent} demo
-            series={indicatorSeries("robor3m", rates.robor3M, 0.012)} />
-          <MetricCard label="Dobânda BNR" value={rates.bnrPolicy} unit="%" tone="mint" icon={Landmark} demo
-            series={indicatorSeries("bnr", rates.bnrPolicy, 0.005)} />
+          <MetricCard label="ROBOR 3M" value={iv.robor3M ?? rates.robor3M} unit="%" tone="lavender" icon={Percent}
+            series={indicatorSeries("robor3m", iv.robor3M ?? rates.robor3M, 0.012)}
+            source={iv.robor3M !== undefined ? indSrc : undefined} stale={indStale} loading={ind.isLoading}
+            demo={iv.robor3M === undefined} />
+          <MetricCard label="Dobânda BNR" value={iv.bnrPolicy ?? rates.bnrPolicy} unit="%" tone="mint" icon={Landmark}
+            series={indicatorSeries("bnr", iv.bnrPolicy ?? rates.bnrPolicy, 0.005)}
+            source={iv.bnrPolicy !== undefined ? indSrc : undefined} stale={indStale} loading={ind.isLoading}
+            demo={iv.bnrPolicy === undefined} />
           <MetricCard label="Inflație anuală" value={inflation.yearly} unit="%" tone="peach" series={inflation.series} icon={Flame} demo />
           <MetricCard label="Inflație lunară" value={inflation.monthly} unit="%" tone="sand" icon={Activity} demo
             series={indicatorSeries("infl-m", inflation.monthly, 0.05)} />
-          <MetricCard label="IRCC" value={rates.ircc} unit="%" tone="blue" icon={LineChartIcon} demo
-            series={indicatorSeries("ircc", rates.ircc, 0.008)} />
+          <MetricCard label="IRCC" value={iv.ircc ?? rates.ircc} unit="%" tone="blue" icon={LineChartIcon}
+            series={indicatorSeries("ircc", iv.ircc ?? rates.ircc, 0.008)}
+            source={iv.ircc !== undefined ? indSrc : undefined} stale={indStale} loading={ind.isLoading}
+            demo={iv.ircc === undefined} />
         </div>
       </section>
 
